@@ -164,13 +164,9 @@
       slider.bind('tap', function(e) {
         e.preventDefault();
         
-        if (true) {
-          if (!$(e.target).is('span')) {
-            slider.data('controls')[slider.hasClass('on') ? 'off' : 'on']();
-          }
+        if (!$(e.target).is('span')) {
+          slider.data('controls')[slider.hasClass('on') ? 'off' : 'on']();
         }
-        
-        mousedown = false;
       });
       
       // "grab" the slider at a certain point when dragging starts
