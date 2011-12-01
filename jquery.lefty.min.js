@@ -1,0 +1,1 @@
+(function(a){a.event.special["click:left"]={setup:function(){a.event.add(this,"click",a.event.special["click:left"].handler)},teardown:function(){a.event.remove(this,"click")},handler:function(b){if(b.which<=1&&!b.metaKey&&!b.shiftKey&&!b.altKey&&!b.ctrlKey){b.type="click:left";a.event.handle.apply(this,arguments)}}}})(jQuery)
