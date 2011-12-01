@@ -1,24 +1,24 @@
 .ui-slideToggle {
-  float: right;
+  display: inline-block;
   border: solid 1px #777;
   position: relative;
   cursor: pointer;
   
-  -moz-border-radius: 21px;
-  -webkit-border-radius: 21px;
-  border-radius: 21px;
+  -moz-border-radius: 18px;
+  -webkit-border-radius: 18px;
+  border-radius: 18px;
 }
 
 .ui-slideToggle-middle {
   height: 20px; width: 60px;
-  border: solid 10px white;
+  border: solid 7px white;
   position: relative;
   margin-top: -40px;
   z-index: 100;
   
-  -moz-border-radius: 25px;
-  -webkit-border-radius: 25px;
-  border-radius: 25px;
+  -moz-border-radius: 17px;
+  -webkit-border-radius: 17px;
+  border-radius: 17px;
 }
 
 .ui-slideToggle-mask {
@@ -29,7 +29,6 @@
 
 .ui-slideToggle-master {
   height: 30px;
-  margin: 3px;
   position: relative;
   left: 10px;
 }
@@ -75,6 +74,7 @@
   padding: 0 10px;
   border: solid 1px black;
   text-align: center;
+  font-weight: normal;
   
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -123,4 +123,11 @@
   background: -ms-linear-gradient(top,  #9c1010 0%,#750a0a 2%,#850d0d 5%,#9c1010 10%,#a51111 12%,#ae1313 17%,#c92f2f 93%,#c72e2e 98%,#9c1010 100%); /* IE10+ */
   background: linear-gradient(top,  #9c1010 0%,#750a0a 2%,#850d0d 5%,#9c1010 10%,#a51111 12%,#ae1313 17%,#c92f2f 93%,#c72e2e 98%,#9c1010 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9c1010', endColorstr='#9c1010',GradientType=0 ); /* IE6-9 */
+}
+
+.ui-slideToggle, .ui-slideToggle * {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
