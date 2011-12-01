@@ -147,7 +147,7 @@
       });
       
       // adjust the slider widths
-      slider.find('.ui-slideToggle-middle').width(labelMaxWidth + 40);
+      slider.find('.ui-slideToggle-middle').width(labelMaxWidth + 43);
       slider.find('a').width(labelMaxWidth);
       
       // cache the "off" and "on" positions
@@ -156,7 +156,7 @@
       
       // default to the "off" position
       master.css({ left: masterOff });
-      handle.css({ left: (labelMaxWidth + 15) + 'px' });
+      handle.css({ left: (labelMaxWidth + 16) + 'px' });
       
       // set the position to "on" based on the selected <option>
       if (values.on == val) {
@@ -253,7 +253,7 @@
               currentOffset = offset.left - (labelMaxWidth + 35);
               
           // move the slider within a fixed range
-          if ((newOffset > (currentOffset + 18)) && (newOffset <= (currentOffset - 16 + dimensions.width))) {
+          if ((newOffset > (currentOffset + 18)) && (newOffset <= (currentOffset - 19 + dimensions.width))) {
             master.offset({ left: newOffset });
           }
         }
