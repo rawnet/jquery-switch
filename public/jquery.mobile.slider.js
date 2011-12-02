@@ -184,7 +184,7 @@
         }
         
         // calculate the offset based on which part of the slider was grabbed
-        var masterLeft = parseInt(master.css('left')), // -37..0
+        var masterLeft = parseInt(master.css('left')),
             masterOffsetLeft = slider.data('offset').left + masterLeft,
             modifier = (masterOffsetLeft - pageX);
         
