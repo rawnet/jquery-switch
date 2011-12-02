@@ -52,8 +52,7 @@
                   '</div>';
                   
   var doc = $(document),
-      mousedown = false,
-      tapTimer;
+      mousedown = false;
       
   doc.bind('mousedown', function(e) {
     if (e.which <= 1 && !e.metaKey && !e.shiftKey && !e.altKey && !e.ctrlKey) {
