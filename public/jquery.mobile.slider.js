@@ -210,6 +210,17 @@
 
       slider.data('modifier', modifier);
     });
+    
+    // "snap" to position when dragging beyond the slider
+    slider.bind('mouseleave', function(e) {
+      if (!slider.data('animating')) {
+        if (slider.find('.ui-slideToggle-handle').offset().left + 15 > slider.data('center').left) {
+          slider.data('controls').on();
+        } else {
+          slider.data('controls').off();
+        }
+      }
+    });
 
     // drag the handle to slide manually
     slider.bind('mousemove touchmove', function(e) {
