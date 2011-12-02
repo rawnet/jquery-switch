@@ -13,7 +13,7 @@
         e.preventDefault();
         
         down = true;
-        timer = setTimeout(function() { down = false; }, 250);
+        timer = setTimeout(function() { down = false; }, 300);
         
         $this.bind('mouseup touchend', function(e) {
           if (down) {
@@ -88,21 +88,41 @@
         options = arg;
       }
     }
-
+    
     this.each(function(i, select) {
+      var $select = $(select);
+      sampleAndGo($select, options); // see below
+    });
+    
+    // on an async UI it is possible that the DOM will be
+    // loaded and events fired a fraction before we are
+    // able to calculate the label widths
+    function sampleAndGo(select, options) {
+      if (select.width()) {
+        andAction(select, options);
+      } else {
+        setTimeout(function() {
+          sampleAndGo(select, options);
+        }, 5);
+      }
+    }
+    
+    // determine the action to take, and take it
+    function andAction(select, options) {
       if (action == 'build') {
         buildSliderFromSelect(select, options);
       } else if (action == 'update') {
         updateSliderFromSelect(select);
       }
-    });
+    }
 
     return this;
   }
   
+  // main build function
   function buildSliderFromSelect(select, options) {
     // hide the <select> and get it's initial val
-    var select  = $(select).hide(),
+    var select  = select.hide(),
         opts    = select.find('option'),
         val     = select.val();
 
@@ -130,6 +150,7 @@
     var labelMaxWidth = 0;
     slider.find('a').each(function(i, a) {
       var w = $(a).width();
+      
       if (w > labelMaxWidth) {
         labelMaxWidth = w;
       }
@@ -280,8 +301,8 @@
     return select;
   }
   
+  // updates the cached offset, dimensions, and center point
   function updateSliderFromSelect(select) {
-    select = $(select);
     var slider = select.data('slider');
     
     // cache the master and handle elements
