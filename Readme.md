@@ -1,3 +1,3 @@
-Deets coming soon...
+# jQuery Switch
 
-MIT License
+jQuery Switch is an iOS-inspired slide toggle. 

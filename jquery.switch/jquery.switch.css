@@ -50,7 +50,8 @@
   height: 30px; width: 30px;
   position: absolute;
   top: -4px; left: -15px;
-  background: url(handle-sprite.png) center -75px no-repeat;
+  background: url(jquery.switch.handle.png);
+  background-size: 30px 30px;
   
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -74,13 +75,6 @@
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
   border-radius: 15px;
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .ui-slideToggle-handle {
-    background-position: center top;
-    background-size: 100%;
-  }
 }
 
 .ui-slideToggle-lower {
