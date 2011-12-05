@@ -46,10 +46,13 @@
     });
   });
   
-  // plugin function: $('.selector select').slideToggle()
-  $.fn.slideToggle = function() {
+  // $('.selector select').switch();
+  $.fn.switch = function() {
     var options = {}, action = 'build';
     
+    // the main function accepts a string (indicating the action
+    // to perform), an object (overriding the default options) or
+    // no arguments at all
     if (arguments.length > 0) {
       var arg = arguments[0], type = typeOf(arg);
       if (type === 'string') {
@@ -59,14 +62,15 @@
       }
     }
     
+    // apply the action on each <select>
     this.each(function(i, select) {
       var $select = $(select);
-      sample($select, options); // see below
+      sample($select, options);
     });
     
     // on an async UI it is possible that the DOM will be
-    // loaded and events fired a fraction before we are
-    // able to calculate the label widths
+    // loaded and "ready" events fired a fraction before the
+    // plugin is able to calculate the label widths
     function sample(select, options) {
       if (select.width()) {
         go(select, options);
@@ -86,7 +90,7 @@
       }
     }
     
-    return this;
+    return this; // maintain chaining
   }
   
   // main build function
@@ -297,24 +301,25 @@
 (function($) {
   $.event.special.tap = {
     setup: function() {
-      var thisObject = this,
-          $this = $(thisObject),
+      var self = this, $self = $(self),
           timer, down = false;
         
-      $this.bind('mousedown touchstart', function(e) {
+      $self.bind('mousedown touchstart', function(e) {
         if (e.which && e.which !== 1) { return false; }
         e.preventDefault();
         
         down = true;
-        timer = setTimeout(function() { down = false; }, 300);
+        timer = setTimeout(function() {
+          down = false;
+        }, 300);
         
-        $this.bind('mouseup touchend', function(e) {
+        $self.bind('mouseup touchend', function(e) {
           if (down) {
-            $this.trigger('tap', e);
+            $self.trigger('tap', e);
             clearTimeout(timer);
             down = false;
           }
-          $this.unbind('mouseup touchend');
+          $self.unbind('mouseup touchend');
         });
       });
     }
