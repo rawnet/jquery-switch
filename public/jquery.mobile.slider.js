@@ -130,8 +130,8 @@
     slider.find('a').width(labelMaxWidth);
     
     // cache the "off" and "on" positions
-    var masterOff = '-' + (labelMaxWidth + 19) + 'px',
-        masterOn  = '0px';
+    var masterOff = '-' + (labelMaxWidth + 21) + 'px',
+        masterOn  = '-2px';
         
     // default to the "off" position
     master.css({ left: masterOff });
@@ -214,7 +214,7 @@
     slider.bind('mousemove touchmove', function(e) {
       e.preventDefault();
       
-      if (e.type == 'touchmove' || mousedown) {
+      if (!disabled && (e.type == 'touchmove' || mousedown)) {
         slider.attr('data-dragging', 'true');
         
         // normalize the pageX, pageY coordinates

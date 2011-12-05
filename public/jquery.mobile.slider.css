@@ -11,13 +11,14 @@
 
 .ui-slideToggle.disabled {
   border-color: #999;
+  cursor: default;
 }
 
 .ui-slideToggle-middle {
   height: 20px; width: 60px;
   border: solid 7px white;
   position: relative;
-  margin-top: -40px;
+  margin-top: -34px;
   z-index: 100;
   
   -moz-border-radius: 17px;
@@ -26,13 +27,13 @@
 }
 
 .ui-slideToggle-mask {
-  height: 36px;
-  margin: 2px;
+  height: 30px;
+  margin: 2px 4px;
   overflow: hidden;
 }
 
 .ui-slideToggle-master {
-  height: 30px;
+  height: 24px;
   position: relative;
   left: 10px;
 }
@@ -160,6 +161,8 @@
 
 .ui-slideToggle.disabled .ui-slideToggle-on,
 .ui-slideToggle.disabled .ui-slideToggle-off {
+  border-color: #333;
+  
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
   filter: alpha(opacity=50); /* IE 5-7 */
   -moz-opacity: 0.5; /* Mozilla */
