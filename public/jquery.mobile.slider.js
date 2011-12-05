@@ -1,37 +1,7 @@
 /**
- * simulate tap event (iOS click events are delayed)
- */
-(function($) {
-  $.event.special.tap = {
-    setup: function() {
-      var thisObject = this,
-          $this = $(thisObject),
-          timer, down = false;
-        
-      $this.bind('mousedown touchstart', function(e) {
-        if (e.which && e.which !== 1) { return false; }
-        e.preventDefault();
-        
-        down = true;
-        timer = setTimeout(function() { down = false; }, 300);
-        
-        $this.bind('mouseup touchend', function(e) {
-          if (down) {
-            $this.trigger('tap', e);
-            clearTimeout(timer);
-            down = false;
-          }
-          $this.unbind('mouseup touchend');
-        });
-      });
-    }
-  };
-})(jQuery);
-
-/**
  * mobile slider by Mike Fulcher
  */
-(function($){
+;(function($){
   
   // slider template
   var template =  '<div class="ui-slideToggle">' +
@@ -91,31 +61,31 @@
     
     this.each(function(i, select) {
       var $select = $(select);
-      sampleAndGo($select, options); // see below
+      sample($select, options); // see below
     });
     
     // on an async UI it is possible that the DOM will be
     // loaded and events fired a fraction before we are
     // able to calculate the label widths
-    function sampleAndGo(select, options) {
+    function sample(select, options) {
       if (select.width()) {
-        andAction(select, options);
+        go(select, options);
       } else {
         setTimeout(function() {
-          sampleAndGo(select, options);
+          sample(select, options);
         }, 5);
       }
     }
     
     // determine the action to take, and take it
-    function andAction(select, options) {
+    function go(select, options) {
       if (action == 'build') {
         buildSliderFromSelect(select, options);
       } else if (action == 'update') {
         updateSliderFromSelect(select);
       }
     }
-
+    
     return this;
   }
   
@@ -151,14 +121,9 @@
     slider.insertAfter(select);
     
     // find the max label width
-    var labelMaxWidth = 0;
-    slider.find('a').each(function(i, a) {
-      var w = $(a).width();
-      
-      if (w > labelMaxWidth) {
-        labelMaxWidth = w;
-      }
-    });
+    var labelMaxWidth = Math.max.apply(null, slider.find('a').map(function(i, a) {
+      return $(a).width();
+    }).toArray());
     
     // adjust the slider widths
     slider.find('.ui-slideToggle-middle').width(labelMaxWidth + 43);
@@ -230,7 +195,7 @@
       var masterLeft = parseInt(master.css('left')),
           masterOffsetLeft = slider.data('offset').left + masterLeft,
           modifier = (masterOffsetLeft - pageX);
-
+          
       slider.data('modifier', modifier);
     });
     
@@ -244,14 +209,14 @@
         }
       }
     });
-
+    
     // drag the handle to slide manually
     slider.bind('mousemove touchmove', function(e) {
       e.preventDefault();
-
+      
       if (e.type == 'touchmove' || mousedown) {
         slider.attr('data-dragging', 'true');
-
+        
         // normalize the pageX, pageY coordinates
         var pageX, pageY;
         if (e.type == "touchmove") {
@@ -261,27 +226,27 @@
           pageX = e.pageX;
           pageY = e.pageY;
         }
-
+        
         // get the offset, dimensions, and center point
         var offset      = slider.data('offset'),
             dimensions  = slider.data('dimensions'),
             center      = slider.data('center');
-
+            
         // calculate the new offset
         var newOffset     = pageX + slider.data('modifier'),
             currentOffset = offset.left - (labelMaxWidth + 35);
-
+            
         // move the slider within a fixed range
         if ((newOffset > (currentOffset + 18)) && (newOffset <= (currentOffset - 19 + dimensions.width))) {
           master.offset({ left: newOffset });
         }
       }
     });
-
+    
     // 
     // on/off events
     // 
-
+    
     // slide to the "on" position
     slider.bind('slide:on', function() {
       slider.data('animating', true).attr('data-dragging', 'false');
@@ -290,7 +255,7 @@
         slider.removeClass('off').addClass('on');
       });
     });
-
+    
     // slide to the "off" position
     slider.bind('slide:off', function() {
       slider.data('animating', true).attr('data-dragging', 'false');
@@ -327,20 +292,56 @@
 }(jQuery));
 
 /**
+ * simulate tap event (iOS click events are delayed)
+ */
+(function($) {
+  $.event.special.tap = {
+    setup: function() {
+      var thisObject = this,
+          $this = $(thisObject),
+          timer, down = false;
+        
+      $this.bind('mousedown touchstart', function(e) {
+        if (e.which && e.which !== 1) { return false; }
+        e.preventDefault();
+        
+        down = true;
+        timer = setTimeout(function() { down = false; }, 300);
+        
+        $this.bind('mouseup touchend', function(e) {
+          if (down) {
+            $this.trigger('tap', e);
+            clearTimeout(timer);
+            down = false;
+          }
+          $this.unbind('mouseup touchend');
+        });
+      });
+    }
+  };
+})(jQuery);
+
+/**
  * typeOf function by Douglas Crockford
  */
-function typeOf(value) {
-  var s = typeof value;
-  if (s === 'object') {
-    if (value) {
-      if (typeof value.length === 'number' &&
-          !(value.propertyIsEnumerable('length')) &&
-          typeof value.splice === 'function') {
-        s = 'array';
-      }
-    } else {
-      s = 'null';
-    }
+(function(global) {
+  if (global.typeOf && global.console && global.console.log) {
+    global.console.log("Overwriting global variable \"typeOf\"");
   }
-  return s;
-}
+  
+  global.typeOf = function(value) {
+    var s = typeof value;
+    if (s === 'object') {
+      if (value) {
+        if (typeof value.length === 'number' &&
+            !(value.propertyIsEnumerable('length')) &&
+            typeof value.splice === 'function') {
+          s = 'array';
+        }
+      } else {
+        s = 'null';
+      }
+    }
+    return s;
+  }
+}(window));
