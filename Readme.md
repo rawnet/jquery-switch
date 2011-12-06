@@ -1,6 +1,6 @@
 # jQuery Switch
 
-jQuery Switch is an iOS-inspired slide toggle. It began as an alertnative switch for jQuery Mobile, but it also targets desktop browsers as well.
+jQuery Switch is an iOS-inspired slide toggle. It began as an alternative switch for jQuery Mobile, but it also targets desktop browsers as well.
 
 ## Usage
 
