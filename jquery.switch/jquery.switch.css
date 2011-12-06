@@ -3,6 +3,7 @@
   border: solid 1px #777;
   position: relative;
   cursor: pointer;
+  font-family: Helvetica, Arial, sans-serif;
   
   -moz-border-radius: 18px;
   -webkit-border-radius: 18px;
