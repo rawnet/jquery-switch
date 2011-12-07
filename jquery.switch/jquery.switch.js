@@ -1,7 +1,30 @@
-/**
- * mobile slider by Mike Fulcher
- */
+// jQuery/Switch, an iOS-inspired slide/toggle switch
+// by Mike Fulcher for Rawnet, http://www.rawnet.com
+// 
+// Version 0.1.0
+// Full source at https://github.com/rawnet/jquery-switch
+// Copyright (c) 2011 Rawnet http://www.rawnet.com
+
+// MIT License, https://github.com/rawnet/jquery-switch/blob/master/LICENCE
+
 ;(function($){
+  
+  // typeOf function by Douglas Crockford
+  var typeOf =  function(value) {
+    var s = typeof value;
+    if (s === 'object') {
+      if (value) {
+        if (typeof value.length === 'number' &&
+            !(value.propertyIsEnumerable('length')) &&
+            typeof value.splice === 'function') {
+          s = 'array';
+        }
+      } else {
+        s = 'null';
+      }
+    }
+    return s;
+  }
   
   // slider template
   var template =  '<div class="ui-slideToggle">' +
@@ -293,12 +316,7 @@
     return select;
   }
   
-}(jQuery));
-
-/**
- * simulate tap event (iOS click events are delayed)
- */
-(function($) {
+  // simulate tap event (iOS click events are delayed)
   $.event.special.tap = {
     setup: function() {
       var self = this, $self = $(self),
@@ -324,29 +342,5 @@
       });
     }
   };
-})(jQuery);
-
-/**
- * typeOf function by Douglas Crockford
- */
-(function(global) {
-  if (global.typeOf && global.console && global.console.log) {
-    global.console.log("Overwriting global variable \"typeOf\"");
-  }
   
-  global.typeOf = function(value) {
-    var s = typeof value;
-    if (s === 'object') {
-      if (value) {
-        if (typeof value.length === 'number' &&
-            !(value.propertyIsEnumerable('length')) &&
-            typeof value.splice === 'function') {
-          s = 'array';
-        }
-      } else {
-        s = 'null';
-      }
-    }
-    return s;
-  }
-}(window));
+}(jQuery));
