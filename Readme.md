@@ -27,11 +27,12 @@ $(document).ready(function() {
 ## Features
 
 - Respects the selected value of the original `<select>`
+- Supports multiple switches
 - Updates the selected value of the original `<select>` when the state is updated
 - Listens for the 'change' event on the original `<select>`
 - Respects the "disabled" attribute
 - Works on both desktop and mobile browsers. IE is currently supported from version 9
-- Drag, click/tap, or progamatically toggle states
+- Drag, click/tap, or pragmatically toggle states
 
 
 ## Notes
