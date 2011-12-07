@@ -2,8 +2,6 @@
 
 jQuery Switch is an iOS-inspired slide toggle. It began as an alternative switch for jQuery Mobile, but it also targets desktop browsers as well.
 
-<iframe style="width: 200px; height: 100px" src="iframe.html" frameborder="0"></iframe>
-
 ## Usage
 
 jQuery Switch builds from `<select>` elements which contain two `<option>` elements relating to the "on" and "off" states respectively. These can be in any order, but the first `<option>` will by default be assumed to relate to the "on" state (this can be overridden).
