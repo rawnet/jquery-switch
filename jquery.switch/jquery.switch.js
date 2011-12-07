@@ -10,7 +10,7 @@
 ;(function($){
   
   // typeOf function by Douglas Crockford
-  var typeOf =  function(value) {
+  var typeOf = function(value) {
     var s = typeof value;
     if (s === 'object') {
       if (value) {
@@ -70,7 +70,7 @@
   });
   
   // $('.selector select').switch();
-  $.fn.switch = function() {
+  $.fn.switcher = function() {
     var options = {}, action = 'build';
     
     // the main function accepts a string (indicating the action
