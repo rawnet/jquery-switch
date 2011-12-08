@@ -32,8 +32,7 @@ $(document).ready(function() {
 - Listens for the 'change' event on the original `<select>`
 - Respects the "disabled" attribute
 - Works on both desktop and mobile browsers. IE is currently supported from version 9
-- Drag, click/tap, or pragmatically toggle states
-
+- Drag or click/tap controls as well as API `.on()`, `.off()`, and `.toggle()`
 
 ## Notes
 

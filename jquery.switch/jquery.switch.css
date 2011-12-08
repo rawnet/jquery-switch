@@ -51,7 +51,7 @@
   height: 30px; width: 30px;
   position: absolute;
   top: -4px; left: -15px;
-  background: url(http://rawnet.github.com/jquery-switch/jquery.switch.handle.png);
+  background: url(jquery.switch.png);
   background-size: 30px 30px;
   
   -moz-border-radius: 15px;
