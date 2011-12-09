@@ -31,12 +31,44 @@ $(document).ready(function() {
 - Updates the selected value of the original `<select>` when the state is updated
 - Listens for the 'change' event on the original `<select>`
 - Respects the "disabled" attribute
-- Works on both desktop and mobile browsers. IE is currently supported from version 9
+- Works on both desktop and mobile browsers (see browser support below)
 - Drag or click/tap controls as well as API `.on()`, `.off()`, and `.toggle()`
+
+## Browser support
+
+### Mobile
+
+- iOS4+ Safari: ok
+- Android Mobile Webkit 533.1: ok
+- Other browsers currently untested
+
+### IE
+
+- IE7 and below: no support
+- IE8: works but lacks CSS support (rounded corners, background size)
+- IE9+: ok
+
+### Firefox
+
+- 3.6 and below: lacks CSS support (background size)
+- 4.0+: ok
+
+### Safari
+
+- 4.0 and below: lacks CSS support (background size)
+- 5.0+: ok
+
+### Opera
+
+- 10+: fine
+
+### Chrome
+
+- 12+: fine
 
 ## Notes
 
-Due to a webkit bug the markup is fairly complex, which makes custom styling difficult. This will hopefully be improved over time, along with wider browser support (including IE).
+Due to a webkit bug the markup is fairly complex, which makes custom styling difficult. This will hopefully be improved over time, along with wider browser support (removing dependency on background-size for one).
 
 Additionally, to improve performance the page offset coordinates of each switch is cached. This means that if the "y" position of a switch changes (ie it is moved horizontally) then the switch may not work correctly. Therefore if you have any actions which may result in your switches changing position, you may need to update the cache by calling the plugin with "update" as the argument:
 
