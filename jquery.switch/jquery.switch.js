@@ -9,33 +9,6 @@
 
 ;(function($){
   
-  // simulate tap event (iOS click events are delayed)
-  $.event.special.tap = {
-    setup: function() {
-      var self = this, $self = $(self),
-          timer, down = false;
-        
-      $self.bind('mousedown touchstart', function(e) {
-        if (e.which !== 1) { return; }
-        e.preventDefault();
-        
-        down = true;
-        timer = setTimeout(function() {
-          down = false;
-        }, 300);
-        
-        $self.bind('mouseup touchend', function(e) {
-          if (down) {
-            $self.trigger('tap', e);
-            clearTimeout(timer);
-            down = false;
-          }
-          $self.unbind('mouseup touchend');
-        });
-      });
-    }
-  };
-  
   var helpers = {
     // typeOf function by Douglas Crockford
     typeOf: function(value) {
@@ -89,7 +62,7 @@
   
   // when releasing the mousebutton after dragging
   // the switch, "snap" to position
-  helpers.doc.bind('mouseup touchend touchcancel', function() {
+  helpers.doc.bind('mouseup touchend', function() {
     $('.ui-switch[data-dragging=true]').each(function(i, slider) {
       slider = $(slider);
       if (!slider.data('animating')) {
@@ -195,7 +168,7 @@
       });
       
       // tap to toggle
-      slider.bind('tap', function(e) {
+      slider.bind('mouseup touchend', function(e) {
         e.preventDefault();
         
         if (!$(e.target).is('span')) {
@@ -226,7 +199,7 @@
       });
       
       // "snap" to position when dragging beyond the slider
-      slider.bind('mouseleave', function(e) {
+      slider.bind('mouseleave touchcancel', function(e) {
         if (!slider.data('animating')) {
           if (slider.find('.ui-switch-handle').offset().left + 15 > slider.data('center').left) {
             controls.on();
