@@ -34,6 +34,10 @@ $(document).ready(function() {
 - Works on both desktop and mobile browsers (see browser support below)
 - Drag or click/tap controls as well as API `.on()`, `.off()`, and `.toggle()`
 
+## Dependencies
+
+The only dependency is jQuery, which is supported from v1.4.4.
+
 ## Browser support
 
 ### Mobile
