@@ -78,9 +78,11 @@
   var switcher = {
     // main build function
     build: function(select, options) {
-      // hide the <select>, get it's initial val, and determine if it is disabled/readonly
-      var select    = $(select).hide(),
-          opts      = select.find('option'),
+      // hide the <select>
+      select.hide();
+      
+      // get it's initial val, and determine if it is disabled/readonly
+      var opts      = select.find('option'),
           val       = select.val(),
           disabled  = !!(select.attr('disabled') || select.attr('readonly'));
           
@@ -295,7 +297,13 @@
   // no arguments at all
   $.fn.switcher = function(arg) {
     this.each(function(i, select) {
-      switcher[arg == 'update' ? 'update' : 'build'](select, arg || {});
+      var $select = $(select);
+    
+      if (arg != 'update' && $select.data('slider')) {
+        return this;
+      }
+        
+      switcher[arg == 'update' ? 'update' : 'build']($select, arg || {});
     });
     
     return this; // maintain chaining
