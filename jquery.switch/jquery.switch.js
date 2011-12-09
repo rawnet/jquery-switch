@@ -295,7 +295,7 @@
     },
     
     // updates the cached offset, dimensions, and center point
-    update: function(select) {
+    update: function(select, options) {
       var slider = select.data('slider');
       
       // cache the master and handle elements
@@ -317,28 +317,12 @@
   }
   
   // register the plugin: $('.selector select').switcher();
-  $.fn.switcher = function() {
-    var options = {}, action = 'build';
-    
-    // the main function accepts a string (indicating the action
-    // to perform), an object (overriding the default options) or
-    // no arguments at all
-    if (arguments.length > 0) {
-      var arg = arguments[0], type = helpers.typeOf(arg);
-      if (type === 'string') {
-        action = arg;
-      } else if (type === 'object') {
-        options = arg;
-      }
-    }
-    
-    // apply the action on each <select>
+  // the main function accepts a string ("update"),
+  // an object (overriding the default options) or
+  // no arguments at all
+  $.fn.switcher = function(arg) {
     this.each(function(i, select) {
-      if (action == 'build') {
-        switcher.build(select, options);
-      } else if (action == 'update') {
-        switcher.update(select);
-      }
+      switcher[arg == 'update' ? 'update' : 'build'](select, arg || {});
     });
     
     return this; // maintain chaining
