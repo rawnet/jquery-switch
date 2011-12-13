@@ -39,13 +39,13 @@
     
     <script>
       $(function() {
-        $('select:not(.args)').switcher();
-        $('select.args').switcher({ on: '1', off: '0' });
+        $('select:not(.args)').switchify();
+        $('select.args').switchify({ on: '1', off: '0' });
         
         $('.api').click(function(e) {
           e.preventDefault();
           var self = $(this),
-              slider = $('#api-select').data('slider'),
+              slider = $('#api-select').data('switch'),
               controls = slider.data('controls');
           
           controls[self.attr('data-action')]();
