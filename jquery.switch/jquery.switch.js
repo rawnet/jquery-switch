@@ -1,11 +1,11 @@
 // jQuery/Switch, an iOS-inspired slide/toggle switch
-// by Mike Fulcher for Rawnet, http://www.rawnet.com
+// by Mike Fulcher for Rawnet: http://www.rawnet.com
 // 
-// Version 0.2.0
+// Version 0.3.0
 // Full source at https://github.com/rawnet/jquery-switch
 // Copyright (c) 2011 Rawnet http://www.rawnet.com
 
-// MIT Licence, https://github.com/rawnet/jquery-switch/blob/master/LICENCE
+// MIT Licence: https://github.com/rawnet/jquery-switch/blob/master/LICENCE
 
 ;(function($, doc){
 
@@ -34,26 +34,27 @@
   // the backslashes escape the newlines to allow the 
   // block to be enclosed within a single string
   var template = '\
-      <div class="ui-switch">                                 \n\
-        <div class="ui-switch-mask">                          \n\
-          <div class="ui-switch-master">                      \n\
-            <div class="ui-switch-upper">                     \n\
-              <span class="ui-switch-handle"></span>          \n\
-            </div>                                            \n\
-            <div class="ui-switch-lower">                     \n\
-              <div class="ui-switch-labels">                  \n\
-                <a href="#" class="ui-switch-on">{{on}}</a>   \n\
-                <a href="#" class="ui-switch-off">{{off}}</a> \n\
-              </div>                                          \n\
-            </div>                                            \n\
-          </div>                                              \n\
-        </div>                                                \n\
-        <div class="ui-switch-middle"></div>                  \n\
-      </div>';
+    <div class="ui-switch">                                 \n\
+      <div class="ui-switch-mask">                          \n\
+        <div class="ui-switch-master">                      \n\
+          <div class="ui-switch-upper">                     \n\
+            <span class="ui-switch-handle"></span>          \n\
+          </div>                                            \n\
+          <div class="ui-switch-lower">                     \n\
+            <div class="ui-switch-labels">                  \n\
+              <a href="#" class="ui-switch-on">{{on}}</a>   \n\
+              <a href="#" class="ui-switch-off">{{off}}</a> \n\
+            </div>                                          \n\
+          </div>                                            \n\
+        </div>                                              \n\
+      </div>                                                \n\
+      <div class="ui-switch-middle"></div>                  \n\
+    </div>';
                   
   // helpers to indicate when the mouse button
   // is held down
   $doc.bind('mousedown', function(e) {
+    // only listen for left-clicks with no modifier keys in use
     if (e.which <= 1 && !e.metaKey && !e.shiftKey && !e.altKey && !e.ctrlKey) {
       mousedown = true;
     }
@@ -62,30 +63,31 @@
   });
   
   // when releasing the mousebutton after dragging
-  // the switch, "snap" to position
+  // the switch, snap to position
   $doc.bind('mouseup touchend', function() {
-    $('.ui-switch[data-dragging=true]').each(function(i, slider) {
-      $slider = $(slider);
-      if (!$slider.data('animating')) {
-        if ($slider.find('.ui-switch-handle').offset().left + 15 > $slider.data('center').left) {
-          $slider.data('controls').on();
+    $('.ui-switch[data-dragging=true]').each(function(i, widget) {
+      $switch = $(widget);
+      if (!$switch.data('animating')) {
+        if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
+          $switch.data('controls').on();
         } else {
-          $slider.data('controls').off();
+          $switch.data('controls').off();
         }
       }
     });
   });
   
-  var switcher = {
+  // object contains the core plugin functions
+  var switchify = {
     // main build function
     build: function($select, options) {
-      // hide the <select>
+      // hide the original <select>
       $select.hide();
       
-      // get it's initial val, and determine if it is disabled/readonly
+      // get the initial val, and determine if it is disabled
       var opts      = $select.find('option'),
           val       = $select.val(),
-          disabled  = !!($select.attr('disabled') || $select.attr('readonly'));
+          disabled  = !!$select.attr('disabled');
           
       // get the on/off values and labels
       var values = {
@@ -96,27 +98,27 @@
         off: opts.filter('[value=' + values.off + ']').text()
       };
       
-      // assign the <select>'s val as a class on the slider
-      var $slider = $(template.replace('{{on}}', text.on).replace('{{off}}', text.off));
-      $slider.addClass($select.val() == values.on ? 'on' : 'off');
+      // assign the <select>'s val as a class on the switch
+      var $switch = $(template.replace('{{on}}', text.on).replace('{{off}}', text.off));
+      $switch.addClass($select.val() == values.on ? 'on' : 'off');
       
       // if the <select> is disabled/readonly, add class 'disabled'
-      if (disabled) { $slider.addClass('disabled'); }
+      if (disabled) { $switch.addClass('disabled'); }
       
       // cache the master and handle elements
-      var $master = $slider.find('.ui-switch-master'),
-          $handle = $slider.find('.ui-switch-handle');
+      var $master = $switch.find('.ui-switch-master'),
+          $handle = $switch.find('.ui-switch-handle');
           
-      // insert the slider into the dom
-      $slider.insertAfter($select);
+      // insert the switch into the dom
+      $switch.insertAfter($select);
       
       // find the max label width
-      var linkWidths = $slider.find('a').map(function(i, a) { return $(a).width() }),
+      var linkWidths = $switch.find('a').map(function(i, a) { return $(a).width() }),
           labelMaxWidth = Math.max(linkWidths[0], linkWidths[1]);
       
-      // adjust the slider widths
-      $slider.find('.ui-switch-middle').width(labelMaxWidth + 43);
-      $slider.find('a').width(labelMaxWidth);
+      // adjust the switch widths
+      $switch.find('.ui-switch-middle').width(labelMaxWidth + 43);
+      $switch.find('a').width(labelMaxWidth);
       
       // cache the "off" and "on" positions
       var masterOff = '-' + (labelMaxWidth + 21) + 'px',
@@ -129,48 +131,48 @@
       // set the position to "on" based on the selected <option>
       if (values.on == val) { $master.css({ left: masterOn }); }
       
-      // helper references between the original <select> and the slider widget
-      $select.data('slider', $slider);
-      $slider.data('select', $select);
+      // helper references between the original <select> and the switch widget
+      $select.data('switch', $switch);
+      $switch.data('select', $select);
       
-      // helpers to determine if the slider is currently in motion or being dragged
-      $slider.data('animating', false).attr('data-dragging', 'false');
+      // helpers to determine if the switch is currently in motion or being dragged
+      $switch.data('animating', false).attr('data-dragging', 'false');
       
-      // cache the offset, dimensions and center point of the slider widget
-      $slider
-        .data('offset', $slider.offset())
-        .data('dimensions', { width: $slider.width(), height: $slider.height() })
-        .data('center', { left: $slider.data('offset').left + ($slider.data('dimensions').width / 2), top: $slider.data('offset').top + ($slider.data('dimensions').height / 2) });
+      // cache the offset, dimensions and center point of the switch widget
+      $switch
+        .data('offset', $switch.offset())
+        .data('dimensions', { width: $switch.width(), height: $switch.height() })
+        .data('center', { left: $switch.data('offset').left + ($switch.data('dimensions').width / 2), top: $switch.data('offset').top + ($switch.data('dimensions').height / 2) });
         
       // cache the offset of the "master" and "handle" elements
       $master.data('offset', $master.offset());
       $handle.data('offset', $handle.offset());
       
-      // add controls to the slider widget
-      var controls = $slider.data('controls', {
-        on:  function() { if (!disabled) { $slider.trigger('slide:on');  return $slider; } },
-        off: function() { if (!disabled) { $slider.trigger('slide:off'); return $slider; } },
+      // add controls to the switch widget
+      var controls = $switch.data('controls', {
+        on:  function() { if (!disabled) { $switch.trigger('slide:on');  return $switch; } },
+        off: function() { if (!disabled) { $switch.trigger('slide:off'); return $switch; } },
         toggle: function() {
           if (!disabled) {
-            $slider.trigger('slide:' + ($select.val() == values.on ? 'off' : 'on'));
-          }; return $slider;
+            $switch.trigger('slide:' + ($select.val() == values.on ? 'off' : 'on'));
+          }; return $switch;
         }
-      }) && $slider.data('controls');
+      }) && $switch.data('controls');
       
       // watch for changes to the <select> and update the widget accordingly
       $select.bind('change', function() {
         controls[$select.val() == values.on ? 'on' : 'off']();
       });
       
-      // allow the sliders to have focus and bind the enter key to toggle states
-      $slider.attr('tabindex', '0').bind('keyup', function(e) {
+      // allow the switches to have focus and bind the enter key to toggle states
+      $switch.attr('tabindex', '0').bind('keyup', function(e) {
         if (e.which === 13) {
           controls.toggle();
         }
       });
       
       // tap to toggle
-      $slider.bind('mouseup touchend', function(e) {
+      $switch.bind('mouseup touchend', function(e) {
         e.preventDefault();
         
         if (!$(e.target).is('span')) {
@@ -178,8 +180,8 @@
         }
       });
       
-      // "grab" the slider at a certain point when dragging starts
-      $slider.bind('mousedown touchstart', function(e) {
+      // "grab" the switch at a certain point when dragging starts
+      $switch.bind('mousedown touchstart', function(e) {
         e.preventDefault();
         
         // normalize the pageX, pageY coordinates
@@ -192,18 +194,18 @@
           pageY = e.pageY;
         }
         
-        // calculate the offset based on which part of the slider was grabbed
+        // calculate the offset based on which part of the switch was grabbed
         var masterLeft = parseInt($master.css('left')),
-            masterOffsetLeft = $slider.data('offset').left + masterLeft,
+            masterOffsetLeft = $switch.data('offset').left + masterLeft,
             modifier = (masterOffsetLeft - pageX);
             
-        $slider.data('modifier', modifier);
+        $switch.data('modifier', modifier);
       });
       
-      // "snap" to position when dragging beyond the slider
-      $slider.bind('mouseleave touchcancel', function(e) {
-        if (!$slider.data('animating')) {
-          if ($slider.find('.ui-switch-handle').offset().left + 15 > $slider.data('center').left) {
+      // "snap" to position when dragging beyond the switch
+      $switch.bind('mouseleave touchcancel', function(e) {
+        if (!$switch.data('animating')) {
+          if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
             controls.on();
           } else {
             controls.off();
@@ -212,11 +214,11 @@
       });
       
       // drag the handle to slide manually
-      $slider.bind('mousemove touchmove', function(e) {
+      $switch.bind('mousemove touchmove', function(e) {
         e.preventDefault();
         
         if (!disabled && (e.type == 'touchmove' || mousedown)) {
-          $slider.attr('data-dragging', 'true');
+          $switch.attr('data-dragging', 'true');
           
           // normalize the pageX, pageY coordinates
           var pageX, pageY;
@@ -229,15 +231,15 @@
           }
           
           // get the offset, dimensions, and center point
-          var offset      = $slider.data('offset'),
-              dimensions  = $slider.data('dimensions'),
-              center      = $slider.data('center');
+          var offset      = $switch.data('offset'),
+              dimensions  = $switch.data('dimensions'),
+              center      = $switch.data('center');
               
           // calculate the new offset
-          var newOffset     = pageX + $slider.data('modifier'),
+          var newOffset     = pageX + $switch.data('modifier'),
               currentOffset = offset.left - (labelMaxWidth + 35);
               
-          // move the slider within a fixed range
+          // move the switch within a fixed range
           if ((newOffset > (currentOffset + 18)) && (newOffset <= (currentOffset - 19 + dimensions.width))) {
             $master.offset({ left: newOffset });
           }
@@ -249,20 +251,20 @@
       // 
       
       // slide to the "on" position
-      $slider.bind('slide:on', function() {
-        $slider.data('animating', true).attr('data-dragging', 'false');
+      $switch.bind('slide:on', function() {
+        $switch.data('animating', true).attr('data-dragging', 'false');
         $master.stop().animate({ left: masterOn }, 'fast', function() {
-          $slider.data('animating', false).data('select').val(values.on);
-          $slider.removeClass('off').addClass('on');
+          $switch.data('animating', false).data('select').val(values.on);
+          $switch.removeClass('off').addClass('on');
         });
       });
       
       // slide to the "off" position
-      $slider.bind('slide:off', function() {
-        $slider.data('animating', true).attr('data-dragging', 'false');
+      $switch.bind('slide:off', function() {
+        $switch.data('animating', true).attr('data-dragging', 'false');
         $master.stop().animate({ left: masterOff }, 'fast', function() {
-          $slider.data('animating', false).data('select').val(values.off);
-          $slider.removeClass('on').addClass('off');
+          $switch.data('animating', false).data('select').val(values.off);
+          $switch.removeClass('on').addClass('off');
         });
       });
       
@@ -271,17 +273,17 @@
     
     // updates the cached offset, dimensions, and center point
     update: function($select, options) {
-      var $slider = $select.data('slider');
+      var $switch = $select.data('switch');
       
       // cache the master and handle elements
-      var $master = $slider.find('.ui-switch-master'),
-          $handle = $slider.find('.ui-switch-handle');
+      var $master = $switch.find('.ui-switch-master'),
+          $handle = $switch.find('.ui-switch-handle');
           
-      // cache the offset, dimensions and center point of the slider widget
-      $slider
-        .data('offset', $slider.offset())
-        .data('dimensions', { width: $slider.width(), height: $slider.height() })
-        .data('center', { left: $slider.data('offset').left + ($slider.data('dimensions').width / 2), top: $slider.data('offset').top + ($slider.data('dimensions').height / 2) });
+      // cache the offset, dimensions and center point of the switch widget
+      $switch
+        .data('offset', $switch.offset())
+        .data('dimensions', { width: $switch.width(), height: $switch.height() })
+        .data('center', { left: $switch.data('offset').left + ($switch.data('dimensions').width / 2), top: $switch.data('offset').top + ($switch.data('dimensions').height / 2) });
         
       // cache the offset of the "master" and "handle" elements
       $master.data('offset', $master.offset());
@@ -291,17 +293,17 @@
     }
   }
   
-  // register the plugin: $('.selector select').switcher();
+  // register the plugin: $('.selector select').switchify();
   // the main function accepts a string ("update"),
   // an object (overriding the default options) or
   // no arguments at all
-  $.fn.switcher = function(arg) {
+  $.fn.switchify = function(arg) {
     this.each(function(i, select) {
       var $select = $(select);
       // prevent multiple instantiation
-      if (arg != 'update' && $select.data('slider')) { return; }
+      if (arg != 'update' && $select.data('switch')) { return; }
       // build or update
-      switcher[arg == 'update' ? 'update' : 'build']($select, arg || {});
+      switchify[arg == 'update' ? 'update' : 'build']($select, arg || {});
     });
     
     return this; // maintain chaining
