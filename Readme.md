@@ -19,10 +19,10 @@ Then, initialize the plugin:
 
 ```javascript
 $(document).ready(function() {
-  $('select').switcher();
+  $('select').switchify();
   
   // optionally, override the defaults:
-  // $('select').switcher({ on: '1', off: '0' });
+  // $('select').switchify({ on: '1', off: '0' });
 });
 ```
 
@@ -79,7 +79,7 @@ Due to a webkit bug the markup is fairly complex, which makes custom styling dif
 Additionally, to improve performance the page offset coordinates of each switch is cached. This means that if the "y" position of a switch changes (ie it is moved horizontally) then the switch may not work correctly. Therefore if you have any actions which may result in your switches changing position, you may need to update the cache by calling the plugin with "update" as the argument:
 
 ``` javascript
-$('select').switcher('update');
+$('select').switchify('update');
 ```
 
 #### Copyright Rawnet 2011. MIT licence.
