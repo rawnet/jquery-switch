@@ -1,10 +1,12 @@
-# jQuery Switch
+# jQuery/Switch
 
-jQuery Switch is an iOS-inspired slide toggle. It began as an alternative switch for jQuery Mobile, but it also targets desktop browsers as well.
+jQuery/Switch is an iOS-inspired slide toggle. It began as an alternative switch for jQuery Mobile, but it also targets desktop browsers as well.
+
+**Note:** jQuery/Switch is still in heavy development. Features may change without warning!
 
 ## Usage
 
-jQuery Switch builds from `<select>` elements which contain two `<option>` elements relating to the "on" and "off" states respectively. These can be in any order, but the first `<option>` will by default be assumed to relate to the "on" state (this can be overridden).
+jQuery/Switch builds from `<select>` elements which contain two `<option>` elements relating to the "on" and "off" states respectively. These can be in any order, but the first `<option>` will by default be assumed to relate to the "on" state (this can be overridden).
 
 ```html
 <select>
