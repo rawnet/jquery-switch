@@ -5,7 +5,7 @@
 // Full source at https://github.com/rawnet/jquery-switch
 // Copyright (c) 2011 Rawnet http://www.rawnet.com
 
-// MIT License, https://github.com/rawnet/jquery-switch/blob/master/LICENCE
+// MIT Licence, https://github.com/rawnet/jquery-switch/blob/master/LICENCE
 
 ;(function($, doc){
 
