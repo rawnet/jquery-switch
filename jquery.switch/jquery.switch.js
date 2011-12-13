@@ -31,23 +31,26 @@
   }
   
   // the markup
-  var template =  '<div class="ui-switch">' +
-                    '<div class="ui-switch-mask">' +
-                      '<div class="ui-switch-master">' +
-                        '<div class="ui-switch-upper">' +
-                          '<span class="ui-switch-handle"></span>' +
-                        '</div>' +
-                        '<div class="ui-switch-lower">' +
-                          '<div class="ui-switch-labels">' +
-                            '<a href="#" class="ui-switch-on">{{on}}</a>' +
-                            '<a href="#" class="ui-switch-off">{{off}}</a>' +
-                          '</div>' +
-                        '</div>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="ui-switch-middle"></div>' +
-                  '</div>';
-  
+  // the backslashes escape the newlines to allow the 
+  // block to be enclosed within a single string
+  var template = '\
+      <div class="ui-switch">                                 \n\
+        <div class="ui-switch-mask">                          \n\
+          <div class="ui-switch-master">                      \n\
+            <div class="ui-switch-upper">                     \n\
+              <span class="ui-switch-handle"></span>          \n\
+            </div>                                            \n\
+            <div class="ui-switch-lower">                     \n\
+              <div class="ui-switch-labels">                  \n\
+                <a href="#" class="ui-switch-on">{{on}}</a>   \n\
+                <a href="#" class="ui-switch-off">{{off}}</a> \n\
+              </div>                                          \n\
+            </div>                                            \n\
+          </div>                                              \n\
+        </div>                                                \n\
+        <div class="ui-switch-middle"></div>                  \n\
+      </div>';
+                  
   // helpers to indicate when the mouse button
   // is held down
   $doc.bind('mousedown', function(e) {
