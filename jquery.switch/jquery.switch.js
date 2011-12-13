@@ -295,16 +295,13 @@
   $.fn.switcher = function(arg) {
     this.each(function(i, select) {
       var $select = $(select);
-      
       // prevent multiple instantiation
-      if (arg != 'update' && $select.data('slider')) {
-        return this;
-      }
-        
+      if (arg != 'update' && $select.data('slider')) { return; }
+      // build or update
       switcher[arg == 'update' ? 'update' : 'build']($select, arg || {});
     });
     
     return this; // maintain chaining
   }
   
-}(jQuery, document));
+}(jQuery, window.document));
