@@ -1,7 +1,7 @@
 // jQuery/Switch, an iOS-inspired slide/toggle switch
 // by Mike Fulcher for Rawnet: http://www.rawnet.com
 // 
-// Version 0.3.0
+// Version 0.3.5
 // Full source at https://github.com/rawnet/jquery-switch
 // Copyright (c) 2011 Rawnet http://www.rawnet.com
 
