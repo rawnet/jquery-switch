@@ -10,6 +10,15 @@
   border-radius: 18px;
 }
 
+.ui-switch:focus {
+  border-color: #8aade1;
+  -webkit-box-shadow: 0 0 5px #8aade1; /* Safari before v5 and Google Chrome */
+  -moz-box-shadow: 0 0 5px #8aade1; /* Firefox */
+  -o-box-shadow: 0 0 5px #8aade1; /* Opera */
+  box-shadow: 0 0 5px #8aade1; /* CSS3 browsers */
+  outline: none; /* disabling Safari's default behavior*/
+}
+
 .ui-switch.disabled {
   border-color: #999;
   cursor: default;
