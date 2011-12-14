@@ -68,7 +68,7 @@
     $('.ui-switch[data-dragging=true]').each(function(i, widget) {
       $switch = $(widget); controls = $switch.data('controls');
       if (!$switch.data('animating')) {
-        if ($switch.find('.ui-switch-handle').data('offset').left + 15 > $switch.data('center').left) {
+        if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
           controls.on();
         } else {
           controls.off();
@@ -166,6 +166,7 @@
       
       // watch for changes to the <select> and update the widget accordingly
       $select.bind('change', function() {
+        mousedown = false; // address an issue which prevents the 'mouseup' event firing
         controls[$select.val() == values.on ? 'on' : 'off']();
       });
       
@@ -211,7 +212,7 @@
       // "snap" to position when dragging beyond the switch
       $switch.bind('mouseleave touchcancel', function(e) {
         if (!$switch.data('animating')) {
-          if ($switch.find('.ui-switch-handle').data('offset').left + 15 > $switch.data('center').left) {
+          if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
             controls.on();
           } else {
             controls.off();
