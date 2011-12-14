@@ -66,12 +66,12 @@
   // the switch, snap to position
   $doc.bind('mouseup touchend', function() {
     $('.ui-switch[data-dragging=true]').each(function(i, widget) {
-      $switch = $(widget);
+      $switch = $(widget); controls = $switch.data('controls');
       if (!$switch.data('animating')) {
-        if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
-          $switch.data('controls').on();
+        if ($switch.find('.ui-switch-handle').data('offset').left + 15 > $switch.data('center').left) {
+          controls.on();
         } else {
-          $switch.data('controls').off();
+          controls.off();
         }
       }
     });
@@ -83,6 +83,9 @@
     build: function($select, options) {
       // hide the original <select>
       $select.hide();
+      
+      // don't allow the original select to gain focus
+      $select.find('a').attr('tabindex', '-1');
       
       // get the initial val, and determine if it is disabled
       var opts      = $select.find('option'),
@@ -102,7 +105,7 @@
       var $switch = $(template.replace('{{on}}', text.on).replace('{{off}}', text.off));
       $switch.addClass($select.val() == values.on ? 'on' : 'off');
       
-      // if the <select> is disabled/readonly, add class 'disabled'
+      // if the <select> is disabled, add class 'disabled'
       if (disabled) { $switch.addClass('disabled'); }
       
       // cache the master and handle elements
@@ -136,6 +139,8 @@
       $switch.data('select', $select);
       
       // helpers to determine if the switch is currently in motion or being dragged
+      // the data-dragging attribute is used in the latter so that these widgets
+      // can be targeted later via the [data-dragging=true] selector
       $switch.data('animating', false).attr('data-dragging', 'false');
       
       // cache the offset, dimensions and center point of the switch widget
@@ -166,16 +171,17 @@
       
       // allow the switches to have focus and bind the enter key to toggle states
       $switch.attr('tabindex', '0').bind('keyup', function(e) {
-        if (e.which === 13) {
-          controls.toggle();
-        }
+        if (e.which === 13) { controls.toggle(); }
       });
+      
+      // but don't allow the <a> elements to gain focus
+      $switch.find('a').attr('tabindex', '-1');
       
       // tap to toggle
       $switch.bind('mouseup touchend', function(e) {
         e.preventDefault();
-        
-        if (!$(e.target).is('span')) {
+        // don't toggle if the event occurred on the handle
+        if (!$(e.target).is('.ui-switch-handle')) {
           controls.toggle();
         }
       });
@@ -205,7 +211,7 @@
       // "snap" to position when dragging beyond the switch
       $switch.bind('mouseleave touchcancel', function(e) {
         if (!$switch.data('animating')) {
-          if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
+          if ($switch.find('.ui-switch-handle').data('offset').left + 15 > $switch.data('center').left) {
             controls.on();
           } else {
             controls.off();
@@ -275,7 +281,7 @@
     update: function($select, options) {
       var $switch = $select.data('switch');
       
-      // cache the master and handle elements
+      // get the master and handle elements
       var $master = $switch.find('.ui-switch-master'),
           $handle = $switch.find('.ui-switch-handle');
           
