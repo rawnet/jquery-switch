@@ -35,6 +35,7 @@ $(document).ready(function() {
 - Respects the "disabled" attribute
 - Works on both desktop and mobile browsers (see browser support below)
 - Drag or click/tap controls as well as API `.on()`, `.off()`, and `.toggle()`
+- Basic keyboard support (tab-enabled, `Enter` to toggle)
 
 ## Dependencies
 
