@@ -85,7 +85,7 @@
       $select.hide();
       
       // don't allow the original select to gain focus
-      $select.find('a').attr('tabindex', '-1');
+      $select.attr('tabindex', '-1');
       
       // get the initial val, and determine if it is disabled
       var opts      = $select.find('option'),
@@ -148,10 +148,6 @@
         .data('offset', $switch.offset())
         .data('dimensions', { width: $switch.width(), height: $switch.height() })
         .data('center', { left: $switch.data('offset').left + ($switch.data('dimensions').width / 2), top: $switch.data('offset').top + ($switch.data('dimensions').height / 2) });
-        
-      // cache the offset of the "master" and "handle" elements
-      $master.data('offset', $master.offset());
-      $handle.data('offset', $handle.offset());
       
       // add controls to the switch widget
       var controls = $switch.data('controls', {
@@ -292,10 +288,6 @@
         .data('dimensions', { width: $switch.width(), height: $switch.height() })
         .data('center', { left: $switch.data('offset').left + ($switch.data('dimensions').width / 2), top: $switch.data('offset').top + ($switch.data('dimensions').height / 2) });
         
-      // cache the offset of the "master" and "handle" elements
-      $master.data('offset', $master.offset());
-      $handle.data('offset', $handle.offset());
-      
       return $select;
     }
   }
