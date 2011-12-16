@@ -67,6 +67,21 @@ for (var i = 0; i < jQueryVersions.length; i++) {
       var widths = $switch.find('a').map(function(i, a) { return $(a).width() });
       expect(widths[0]).toEqual(widths[1]);
     });
+    
+    it('should initialize multiple switches for each <select>', function() {
+      var $select1 = $('<select><option value="1">On</option><option value="0">Off</option></select>').appendTo('body'),
+          $select2 = $('<select><option value="1">On</option><option value="0" selected="selected">Off</option></select>').appendTo('body');
+          
+      $('select').switchify();
+      
+      var $switch1 = $select1.data('switch'),
+          $switch2 = $select2.data('switch');
+          
+      expect($switch1.is('.ui-switch')).toBeTruthy();
+      expect($switch2.is('.ui-switch')).toBeTruthy();
+      expect($switch1).toHaveClass('on');
+      expect($switch2).toHaveClass('off');
+    });
   });
   
   // spec suite: <select> variations
@@ -100,22 +115,32 @@ for (var i = 0; i < jQueryVersions.length; i++) {
       expect($switch.find('.ui-switch-off').text()).toBe('OffState');
     });
     
-    // loose matching only; testing the state of the switch is performed in another test suite
+    // loose matching only; testing the on/off state of the switch is performed in another test suite
     it('should assume the correct state depending on the selected <option>', function() {
       var $select = $('<select><option value="1">On</option><option value="0">Off</option></select>').appendTo('body').switchify(),
           $switch = $select.data('switch');
-          
       expect($switch).toHaveClass('on');
       
       var $select = $('<select><option value="1" selected="selected">On</option><option value="0">Off</option></select>').appendTo('body').switchify(),
           $switch = $select.data('switch');
-          
       expect($switch).toHaveClass('on');
       
       var $select = $('<select><option value="1">On</option><option value="0" selected="selected">Off</option></select>').appendTo('body').switchify(),
           $switch = $select.data('switch');
-          
       expect($switch).toHaveClass('off');
+    });
+    
+    it('should disable changing state if the original <select> is disabled', function() {
+      var $select = $('<select disabled="disabled"><option value="1">On</option><option value="0">Off</option></select>').appendTo('body').switchify(),
+          $switch = $select.data('switch');
+          
+      expect($switch).toHaveClass('on');
+      $switch.data('controls').off();
+      expect($switch).toHaveClass('on');
+      $switch.trigger('mouseup');
+      expect($switch).toHaveClass('on');
+      $select.val('0');
+      expect($switch).toHaveClass('on');
     });
   });
 }
