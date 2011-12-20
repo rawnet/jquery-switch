@@ -260,6 +260,7 @@
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
         });
+        $switch.trigger('slide', values.on);
       });
       
       // slide to the "off" position
@@ -269,6 +270,7 @@
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
         });
+        $switch.trigger('slide', values.off);
       });
       
       return $select;
