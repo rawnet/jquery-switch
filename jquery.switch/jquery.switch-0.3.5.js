@@ -101,6 +101,7 @@
         off: opts.filter('[value=' + values.off + ']').text()
       };
       
+      var before = options.before || function(type) {return true;};
       // assign the <select>'s val as a class on the switch
       var $switch = $(template.replace('{{on}}', text.on).replace('{{off}}', text.off));
       $switch.addClass($select.val() == values.on ? 'on' : 'off');
@@ -151,12 +152,28 @@
       
       // add controls to the switch widget
       var controls = $switch.data('controls', {
-        on:  function() { if (!disabled) { $switch.trigger('slide:on');  return $switch; } },
-        off: function() { if (!disabled) { $switch.trigger('slide:off'); return $switch; } },
-        toggle: function() {
-          if (!disabled) {
-            $switch.trigger('slide:' + ($select.val() == values.on ? 'off' : 'on'));
-          }; return $switch;
+        _transition: function(type, options) {
+          if (!disabled) { 
+            options = (typeof(options) !== 'undefined') ? options : {};
+            if (options.hasOwnProperty('silent') && options.silent) {
+              $switch.trigger('slide:' + type);
+            } else {
+              if (before(this, type, values[type])) {
+                $switch.trigger('slide:' + type);
+              }
+            }
+          }
+          return $switch;
+        },
+        on:  function(options) { 
+          return this._transition('on', options);
+        },
+        off: function(options) {
+          return this._transition('off', options);
+        },
+        toggle: function(options) {
+          var v = ($select.val() == values.on ? 'off' : 'on');
+          return this._transition(v, options);
         }
       }) && $switch.data('controls');
       
@@ -260,6 +277,7 @@
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
         });
+        $switch.trigger('slide', values.on);
       });
       
       // slide to the "off" position
@@ -269,6 +287,7 @@
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
         });
+        $switch.trigger('slide', values.off);
       });
       
       return $select;
