@@ -35,20 +35,40 @@
     
     <!-- Le jquery switch-->
     <link href="jquery.switch/jquery.switch-0.3.5.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="jquery.switch/jquery.switch-0.3.5.min.js"></script>
+    <script type="text/javascript" src="jquery.switch/jquery.switch-0.3.5.js"></script>
     
     <script>
       $(function() {
-        $('select:not(.args)').switchify();
+        $('select:not(.args .evented)').switchify();
         $('select.args').switchify({ on: '1', off: '0' });
         
         $('.api').click(function(e) {
           e.preventDefault();
           var self = $(this),
-              slider = $('#api-select').data('switch'),
-              controls = slider.data('controls');
-          
+              $switch = $('#api-select').data('switch'),
+              controls = $switch.data('controls');
+              
           controls[self.attr('data-action')]();
+        });
+        
+        $('select.evented').switchify().data('switch').bind('slide', function(e, type) {
+          e.preventDefault();
+          $('.events').append('<li>Preparing to slide to "' + type + '" position</li>');
+          var answer = confirm('Switch to the "' + type + '" position?'),
+              $switch = $(this),
+              controls = $switch.data('controls');
+              
+          if (answer) {
+            $('.events').append('<li>Sliding to "' + type + '" position</li>');
+            setTimeout(function() {
+              controls[type]({ silent: true });
+            }, 50);
+          } else {
+            $('.events').append('<li>Cancelled slide to "' + type + '" position</li>');
+            setTimeout(function() {
+              controls[$switch.hasClass('on') ? 'on' : 'off']({ silent: true });
+            }, 50);
+          }
         });
         
         $('.focus').click(function(e) {
@@ -224,10 +244,11 @@
         <div class="row">
           <div class="span4">
             <h3>Event driven</h3>
-            <select class="example-7 inline">
+            <select class="example-7 inline evented">
               <option value="1">On</option>
               <option value="0">Off</option>
             </select>
+            <ul class="events"></ul>
           </div>
           
           <div class="span12">
@@ -236,7 +257,19 @@
   &lt;option value="1"&gt;On&lt;/option&gt;
   &lt;option value="0"&gt;Off&lt;/option&gt;
 &lt;/select&gt;</pre>
-            <pre class="prettyprint linenums">$('select').switchify();</pre>
+            <pre class="prettyprint linenums">$('select').switchify().data('switch').bind('slide', function(e, type) {
+  e.preventDefault(); // cancel the default slide action
+  $('.events').append('&lt;li&gt;Preparing to slide to "' + type + '" position&lt;/li&gt;');
+  var answer = confirm('Switch to the "' + type + '" position?');
+  if (answer) {
+    $('.events').append('&lt;li&gt;Sliding to "' + type + '" position&lt;/li&gt;');
+    var controls = $(this).data('controls');
+    // manually perform the slide action, but without triggering the 'slide' event again
+    controls[type]({ silent: true });
+  } else {
+    $('.events').append('&lt;li&gt;Cancelled slide to "' + type + '" position&lt;li&gt;');
+  }
+});</pre>
             <pre class="prettyprint linenums">select { display: inline !important; }</pre>
           </div>
         </div><!-- /row -->
@@ -273,8 +306,8 @@
 $('.api').click(function(e) {
   e.preventDefault();
   var self = $(this),
-      slider = $('#api-select').data('slider'),
-      controls = slider.data('controls');
+      $switch = $('#api-select').data('switch'),
+      controls = $switch.data('controls');
 
   controls[self.attr('data-action')]();
 });</pre>
