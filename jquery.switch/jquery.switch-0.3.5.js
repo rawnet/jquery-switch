@@ -48,7 +48,7 @@
   // when releasing the mousebutton after dragging
   // the switch, snap to position
   $doc.bind('mouseup touchend', function() {
-    $('.ui-switch[data-dragging=true]').each(function(i, widget) {
+    $('.ui-switch[data-dragging]').each(function(i, widget) {
       var $switch = $(widget), controls = $switch.data('controls');
       if (!$switch.data('animating')) {
         if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
@@ -122,10 +122,10 @@
       $select.data('switch', $switch);
       $switch.data('select', $select);
       
-      // helpers to determine if the switch is currently in motion or being dragged
-      // the data-dragging attribute is used in the latter so that these widgets
+      // helper to determine if the switch is currently in motion or being dragged;
+      // the data-dragging attribute is also used so that these widgets
       // can be targeted later via the [data-dragging=true] selector
-      $switch.data('animating', false).attr('data-dragging', 'false');
+      $switch.data('animating', false);
       
       // cache the offset, dimensions and center point of the switch widget
       $switch
@@ -254,8 +254,8 @@
       // 
       
       // slide to the "on" position
-      $switch.bind('slide:on', function() {
-        $switch.data('animating', true).attr('data-dragging', 'false');
+      $switch.bind('slideon', function() {
+        $switch.data('animating', true).removeAttr('data-dragging');
         $master.stop().animate({ left: masterOn }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
@@ -264,8 +264,8 @@
       });
       
       // slide to the "off" position
-      $switch.bind('slide:off', function() {
-        $switch.data('animating', true).attr('data-dragging', 'false');
+      $switch.bind('slideoff', function() {
+        $switch.data('animating', true).removeAttr('data-dragging');
         $master.stop().animate({ left: masterOff }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
