@@ -7,8 +7,8 @@
 
 // MIT Licence: https://github.com/rawnet/jquery-switch/blob/master/LICENCE
 
-;(function($, doc){
-
+;(function($, doc) {
+  
   // reused vars
   var $doc = $(doc),
   mousedown = false;
