@@ -104,7 +104,7 @@
       var before = options.before || function(type) {return true;};
       // assign the <select>'s val as a class on the switch
       var $switch = $(template.replace('{{on}}', text.on).replace('{{off}}', text.off));
-      $switch.addClass($select.val() == values.on ? 'on' : 'off');
+      $switch.addClass($select.val() === values.on ? 'on' : 'off');
       
       // if the <select> is disabled, add class 'disabled'
       if (disabled) { $switch.addClass('disabled'); }
@@ -133,7 +133,7 @@
       $handle.css({ left: (labelMaxWidth + 16) + 'px' });
       
       // set the position to "on" based on the selected <option>
-      if (values.on == val) { $master.css({ left: masterOn }); }
+      if (values.on === val) { $master.css({ left: masterOn }); }
       
       // helper references between the original <select> and the switch widget
       $select.data('switch', $switch);
@@ -180,7 +180,7 @@
       // watch for changes to the <select> and update the widget accordingly
       $select.bind('change', function() {
         mousedown = false; // address an issue which prevents the 'mouseup' event firing
-        controls[$select.val() == values.on ? 'on' : 'off']();
+        controls[$select.val() === values.on ? 'on' : 'off']();
       });
       
       // allow the switches to have focus and bind the enter key to toggle states
@@ -206,7 +206,7 @@
         
         // normalize the pageX, pageY coordinates
         var pageX, pageY;
-        if (e.type == "touchstart") {
+        if (e.type === "touchstart") {
           pageX = e.originalEvent.targetTouches[0].pageX;
           pageY = e.originalEvent.targetTouches[0].pageY;
         } else {
@@ -237,12 +237,12 @@
       $switch.bind('mousemove touchmove', function(e) {
         e.preventDefault();
         
-        if (!disabled && (e.type == 'touchmove' || mousedown)) {
+        if (!disabled && (e.type === 'touchmove' || mousedown)) {
           $switch.attr('data-dragging', 'true');
           
           // normalize the pageX, pageY coordinates
           var pageX, pageY;
-          if (e.type == "touchmove") {
+          if (e.type === "touchmove") {
             pageX = e.originalEvent.targetTouches[0].pageX;
             pageY = e.originalEvent.targetTouches[0].pageY;
           } else {
@@ -319,12 +319,12 @@
     this.each(function(i, select) {
       var $select = $(select);
       // prevent multiple instantiation
-      if (arg != 'update' && $select.data('switch')) { return; }
+      if (arg !== 'update' && $select.data('switch')) { return; }
       // build or update
-      switchify[arg == 'update' ? 'update' : 'build']($select, arg || {});
+      switchify[arg === 'update' ? 'update' : 'build']($select, arg || {});
     });
     
     return this; // maintain chaining
-  }
+  };
   
 }(jQuery, window.document));
