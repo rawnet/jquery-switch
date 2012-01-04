@@ -177,10 +177,7 @@
       // tap to toggle
       $switch.bind('mouseup touchend', function(e) {
         e.preventDefault();
-        // don't toggle if the event occurred on the handle
-        if (!$(e.target).is('.ui-switch-handle')) {
-          controls.toggle();
-        }
+        controls.toggle();
       });
       
       // "grab" the switch at a certain point when dragging starts
