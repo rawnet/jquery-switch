@@ -277,12 +277,8 @@
     },
     
     // updates the cached offset, dimensions, and center point
-    update: function($select, options) {
+    update: function($select) {
       var $switch = $select.data('switch');
-      
-      // get the master and handle elements
-      var $master = $switch.find('.ui-switch-master'),
-          $handle = $switch.find('.ui-switch-handle');
           
       // cache the offset, dimensions and center point of the switch widget
       $switch
