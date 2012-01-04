@@ -66,7 +66,7 @@
   // the switch, snap to position
   $doc.bind('mouseup touchend', function() {
     $('.ui-switch[data-dragging=true]').each(function(i, widget) {
-      $switch = $(widget); controls = $switch.data('controls');
+      var $switch = $(widget), controls = $switch.data('controls');
       if (!$switch.data('animating')) {
         if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
           controls.on();
