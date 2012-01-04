@@ -100,7 +100,7 @@
       $switch.insertAfter($select);
       
       // find the max label width
-      var linkWidths = $switch.find('a').map(function(i, a) { return $(a).width() }),
+      var linkWidths = $switch.find('a').map(function(i, a) { return $(a).width(); }),
           labelMaxWidth = Math.max(linkWidths[0], linkWidths[1]);
       
       // adjust the switch widths
@@ -292,7 +292,7 @@
         
       return $select;
     }
-  }
+  };
   
   // register the plugin: $('.selector select').switchify();
   // the main function accepts a string ("update"),
