@@ -11,7 +11,8 @@
   
   // reused vars
   var $doc = $(doc),
-  mousedown = false;
+  mousedown = false,
+  wait = false;
   
   // the markup
   // the backslashes escape the newlines to allow the 
@@ -48,16 +49,9 @@
   // when releasing the mousebutton after dragging
   // the switch, snap to position
   $doc.bind('mouseup touchend', function() {
-    $('.ui-switch[data-dragging]').each(function(i, widget) {
-      var $switch = $(widget), controls = $switch.data('controls');
-      if (!$switch.data('animating')) {
-        if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
-          controls.on();
-        } else {
-          controls.off();
-        }
-      }
-    });
+    wait = false;
+    $('.ui-switch[data-dragging]').data('controls').snap();
+    wait = true;
   });
   
   // object contains the core plugin functions
@@ -84,7 +78,6 @@
         off: opts.filter('[value=' + values.off + ']').text()
       };
       
-      var before = options.before || function(type) {return true;};
       // assign the <select>'s val as a class on the switch
       var $switch = $(template.replace('{{on}}', text.on).replace('{{off}}', text.off));
       $switch.addClass($select.val() === values.on ? 'on' : 'off');
@@ -132,31 +125,48 @@
         .data('offset', $switch.offset())
         .data('dimensions', { width: $switch.width(), height: $switch.height() })
         .data('center', { left: $switch.data('offset').left + ($switch.data('dimensions').width / 2), top: $switch.data('offset').top + ($switch.data('dimensions').height / 2) });
+        
+      // custom event which can accept preventDefault()
+      $.event.special.slide = {
+        _default: function(e, type) {
+          if (!(type === 'on' || type === 'off')) {
+            throw "jQuery/Switch: \"slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
+          }
+          // "this" refers to the document, so e.target must be used
+          $(e.target).trigger('slide' + type);
+        }
+      };
       
       // add controls to the switch widget
       var controls = $switch.data('controls', {
-        _transition: function(type, options) {
-          if (!disabled) { 
-            options = (typeof(options) !== 'undefined') ? options : {};
-            if (options.hasOwnProperty('silent') && options.silent) {
-              $switch.trigger('slide:' + type);
-            } else {
-              if (before(this, type, values[type])) {
-                $switch.trigger('slide:' + type);
-              }
-            }
+        _to: function(type, options) {
+          if (!options) { options = { silent: false }; }
+          if (!disabled && !options.silent) {
+            $switch.trigger('slide', [type]);
+          } else if (!disabled) {
+            $switch.trigger('slide' + type);
           }
           return $switch;
         },
-        on:  function(options) { 
-          return this._transition('on', options);
+        on:  function(opts) { 
+          return controls._to('on', opts);
         },
-        off: function(options) {
-          return this._transition('off', options);
+        off: function(opts) {
+          return controls._to('off', opts);
         },
-        toggle: function(options) {
-          var v = ($select.val() == values.on ? 'off' : 'on');
-          return this._transition(v, options);
+        toggle: function(opts) {
+          return controls._to(($select.val() === values.on ? 'off' : 'on'), opts);
+        },
+        snap: function(opts) {
+          if (!$switch.data('animating') && $switch.attr('data-dragging')) {
+            if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
+              return controls.on(opts);
+            } else {
+              return controls.off(opts);
+            }
+          } else {
+            return $switch;
+          }
         }
       }) && $switch.data('controls');
       
@@ -177,7 +187,9 @@
       // tap to toggle
       $switch.bind('mouseup touchend', function(e) {
         e.preventDefault();
-        controls.toggle();
+        if (!$switch.attr('data-dragging')) {
+          controls.toggle();
+        }
       });
       
       // "grab" the switch at a certain point when dragging starts
@@ -199,17 +211,16 @@
             masterOffsetLeft = $switch.data('offset').left + masterLeft,
             modifier = (masterOffsetLeft - pageX);
             
+        // cache the offset
         $switch.data('modifier', modifier);
       });
       
       // "snap" to position when dragging beyond the switch
       $switch.bind('mouseleave touchcancel', function(e) {
-        if (!$switch.data('animating')) {
-          if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
-            controls.on();
-          } else {
-            controls.off();
-          }
+        if (!wait) {
+          $switch.data('controls').snap();
+        } else {
+          wait = false;
         }
       });
       
@@ -256,8 +267,8 @@
         $master.stop().animate({ left: masterOn }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
+          mousedown = false;
         });
-        $switch.trigger('slide', values.on);
       });
       
       // slide to the "off" position
@@ -266,8 +277,8 @@
         $master.stop().animate({ left: masterOff }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
+          mousedown = false;
         });
-        $switch.trigger('slide', values.off);
       });
       
       return $select;
