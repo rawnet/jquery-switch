@@ -13,23 +13,6 @@
   var $doc = $(doc),
   mousedown = false;
   
-  // typeOf function by Douglas Crockford
-  function typeOf(value) {
-    var s = typeof value;
-    if (s === 'object') {
-      if (value) {
-        if (typeof value.length === 'number' &&
-            !(value.propertyIsEnumerable('length')) &&
-            typeof value.splice === 'function') {
-          s = 'array';
-        }
-      } else {
-        s = 'null';
-      }
-    }
-    return s;
-  }
-  
   // the markup
   // the backslashes escape the newlines to allow the 
   // block to be enclosed within a single string
