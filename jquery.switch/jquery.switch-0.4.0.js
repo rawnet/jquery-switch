@@ -1,7 +1,7 @@
 // jQuery/Switch, an iOS-inspired slide/toggle switch
 // by Mike Fulcher for Rawnet: http://www.rawnet.com
 // 
-// Version 0.3.5
+// Version 0.4
 // Full source at https://github.com/rawnet/jquery-switch
 // Copyright (c) 2011 Rawnet http://www.rawnet.com
 
@@ -50,8 +50,10 @@
   // the switch, snap to position
   $doc.bind('mouseup touchend', function() {
     wait = false;
-    $('.ui-switch[data-dragging]').data('controls').snap();
-    wait = true;
+    if ($('.ui-switch[data-dragging]').length > 0) {
+      $('.ui-switch[data-dragging]').data('controls').snap();
+      wait = true;
+    }
   });
   
   // object contains the core plugin functions
@@ -267,7 +269,7 @@
         $master.stop().animate({ left: masterOn }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
-          mousedown = false;
+          mousedown = false; wait = false;
         });
       });
       
@@ -277,7 +279,7 @@
         $master.stop().animate({ left: masterOff }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
-          mousedown = false;
+          mousedown = false; wait = false;
         });
       });
       
