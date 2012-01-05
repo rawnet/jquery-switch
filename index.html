@@ -39,7 +39,7 @@
     
     <script>
       $(function() {
-        $('select:not(.args .evented)').switchify();
+        $('select:not(.args, .evented)').switchify();
         $('select.args').switchify({ on: '1', off: '0' });
         
         $('.api').click(function(e) {

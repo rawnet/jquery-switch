@@ -36,6 +36,7 @@ $(document).ready(function() {
 - Works on both desktop and mobile browsers (see browser support below)
 - Drag or click/tap controls as well as API `.on()`, `.off()`, and `.toggle()`
 - Basic keyboard support (tab-enabled, `Enter` to toggle)
+- Event driven via the "slide" event
 
 ## Dependencies
 
@@ -75,7 +76,7 @@ The only dependency is jQuery, which is supported from v1.4.4.
 
 ## Notes
 
-Due to a webkit bug the markup is fairly complex, which makes custom styling difficult. This will hopefully be improved over time, along with wider browser support (removing dependency on background-size for one).
+Due to a webkit bug the markup is fairly complex, which makes custom styling difficult. This will hopefully be improved over time, along with wider browser support (removing the dependency on background-size for one).
 
 Additionally, to improve performance the page offset coordinates of each switch is cached. This means that if the "y" position of a switch changes (ie it is moved horizontally) then the switch may not work correctly. Therefore if you have any actions which may result in your switches changing position, you may need to update the cache by calling the plugin with "update" as the argument:
 
