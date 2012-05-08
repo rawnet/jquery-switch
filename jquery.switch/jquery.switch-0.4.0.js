@@ -132,7 +132,8 @@
       $.event.special.slide = {
         _default: function(e, type) {
           if (!(type === 'on' || type === 'off')) {
-            throw "jQuery/Switch: \"slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
+            //this cause trouble when using along with jqueryui slider: throw "jQuery/Switch: \"slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
+            return;
           }
           // "this" refers to the document, so e.target must be used
           $(e.target).trigger('slide' + type);
