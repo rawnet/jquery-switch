@@ -1,4 +1,4 @@
-var jQueryVersions = ['1.4.0', '1.7.1'];
+var jQueryVersions = ['1.4.2', '1.7.1'];
 
 // run the test suite against multiple jquery versions
 for (var i = 0; i < jQueryVersions.length; i++) {
