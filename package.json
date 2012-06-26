@@ -1,0 +1,32 @@
+{
+    "name": "jquery/switch",
+    "version": "0.4.1",
+    "title": "jQuery/Switch",
+    "author": {
+        "name": "Mike Fulcher",
+        "url": "https://github.com/6twenty"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "LICENSE"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.4.4"
+    },
+    "description": "A flexible and good-looking iOS-inspired slide/toggle widget",
+    "keywords": [
+        "switch",
+        "toggle",
+        "slide",
+        "mobile"
+    ],
+    "homepage": "https://github.com/rawnet/jquery-switch",
+    "files": [
+        "jquery.switch/jquery.switch.js",
+        "jquery.switch/jquery.switch.min.js",
+        "jquery.switch/jquery.switch.css",
+        "jquery.switch/jquery.switch.png"
+    ]
+}
