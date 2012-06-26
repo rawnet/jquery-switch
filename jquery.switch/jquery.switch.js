@@ -1,7 +1,7 @@
 // jQuery/Switch, an iOS-inspired slide/toggle switch
 // by Mike Fulcher for Rawnet: http://www.rawnet.com
 // 
-// Version 0.4
+// Version 0.4.1
 // Full source at https://github.com/rawnet/jquery-switch
 // Copyright (c) 2011 Rawnet http://www.rawnet.com
 
@@ -129,13 +129,13 @@
         .data('center', { left: $switch.data('offset').left + ($switch.data('dimensions').width / 2), top: $switch.data('offset').top + ($switch.data('dimensions').height / 2) });
         
       // custom event which can accept preventDefault()
-      $.event.special.slide = {
+      $.event.special['switch:slide'] = {
         _default: function(e, type) {
           if (!(type === 'on' || type === 'off')) {
-            throw "jQuery/Switch: \"slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
+            throw "jQuery/Switch: \"switch:slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
           }
           // "this" refers to the document, so e.target must be used
-          $(e.target).trigger('slide' + type);
+          $(e.target).trigger('switch:slide' + type);
         }
       };
       
@@ -144,9 +144,9 @@
         _to: function(type, options) {
           if (!options) { options = { silent: false }; }
           if (!disabled && !options.silent) {
-            $switch.trigger('slide', [type]);
+            $switch.trigger('switch:slide', [type]);
           } else if (!disabled) {
-            $switch.trigger('slide' + type);
+            $switch.trigger('switch:slide' + type);
           }
           return $switch;
         },
@@ -264,7 +264,7 @@
       // 
       
       // slide to the "on" position
-      $switch.bind('slideon', function() {
+      $switch.bind('switch:slideon', function() {
         $switch.data('animating', true).removeAttr('data-dragging');
         $master.stop().animate({ left: masterOn }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.on);
@@ -274,7 +274,7 @@
       });
       
       // slide to the "off" position
-      $switch.bind('slideoff', function() {
+      $switch.bind('switch:slideoff', function() {
         $switch.data('animating', true).removeAttr('data-dragging');
         $master.stop().animate({ left: masterOff }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.off);
