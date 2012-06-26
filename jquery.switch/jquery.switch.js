@@ -131,11 +131,17 @@
       // custom event which can accept preventDefault()
       $.event.special['switch:slide'] = {
         _default: function(e, type) {
+          var $switch = $(e.target);
+          if (!type && $switch.data('switchEvent')) {
+            type = $switch.data('switchEvent');
+            $switch.removeData('switchEvent');
+          }
+
           if (!(type === 'on' || type === 'off')) {
             throw "jQuery/Switch: \"switch:slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
           }
-          // "this" refers to the document, so e.target must be used
-          $(e.target).trigger('switch:slide' + type);
+
+          $switch.trigger('switch:slide' + type);
         }
       };
       
@@ -144,6 +150,7 @@
         _to: function(type, options) {
           if (!options) { options = { silent: false }; }
           if (!disabled && !options.silent) {
+            $switch.data('switchEvent', type);
             $switch.trigger('switch:slide', [type]);
           } else if (!disabled) {
             $switch.trigger('switch:slide' + type);
@@ -160,10 +167,13 @@
           return controls._to(($select.val() === values.on ? 'off' : 'on'), opts);
         },
         snap: function(opts) {
+          if (!opts) { opts = {} };
           if (!$switch.data('animating') && $switch.attr('data-dragging')) {
             if ($switch.find('.ui-switch-handle').offset().left + 15 > $switch.data('center').left) {
+              opts.silent = $switch.data('select').val() == values.on;
               return controls.on(opts);
             } else {
+              opts.silent = $switch.data('select').val() == values.off;
               return controls.off(opts);
             }
           } else {
