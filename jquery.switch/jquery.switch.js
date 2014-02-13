@@ -279,6 +279,7 @@
         $master.stop().animate({ left: masterOn }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
+          $switch.trigger('switch:slide-complete')
           mousedown = false; wait = false;
         });
       });
@@ -289,6 +290,7 @@
         $master.stop().animate({ left: masterOff }, 'fast', function() {
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
+          $switch.trigger('switch:slide-complete')
           mousedown = false; wait = false;
         });
       });
