@@ -2,7 +2,15 @@
 
 jQuery/Switch is an iOS-inspired slide/toggle widget. It began as an alternative switch for jQuery Mobile, but it also targets desktop browsers as well.
 
-**Note:** jQuery/Switch is still in heavy development. Features may change without warning!
+## Install
+
+Using [Bower](http://bower.io) you can just run `bower install jquery-switch`
+
+For [Compass](http://compass-style.org) projects add this line to `config.rb`
+
+    add_import_path "BOWER_PATH/jquery.switch"
+
+Then add `@import "jquery.switch"; @include jqSwitch;` in your stylesheet.
 
 ## Usage
 
@@ -18,7 +26,7 @@ jQuery/Switch builds from `<select>` elements which contain two `<option>` eleme
 Then, initialize the plugin:
 
 ```javascript
-$(document).ready(function() {
+$(function() {
   $('select').switchify();
   
   // optionally, override the defaults:
