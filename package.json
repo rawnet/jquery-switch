@@ -22,11 +22,11 @@
         "slide",
         "mobile"
     ],
-    "homepage": "https://github.com/rawnet/jquery-switch",
+    "homepage": "https://github.com/m1ke/jquery-switch",
     "files": [
         "jquery.switch/jquery.switch.js",
         "jquery.switch/jquery.switch.min.js",
         "jquery.switch/jquery.switch.css",
-        "jquery.switch/jquery.switch.png"
+        "jquery.switch/jquery.switch.scss"
     ]
 }
