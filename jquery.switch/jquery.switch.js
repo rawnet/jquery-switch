@@ -33,6 +33,7 @@
         </div>                                              \n\
       </div>                                                \n\
       <div class="ui-switch-middle"></div>                  \n\
+      <div class="ui-switch-width"></div>                  \n\
     </div>';
                   
   // helpers to indicate when the mouse button
@@ -99,7 +100,7 @@
           labelMaxWidth = Math.max(linkWidths[0], linkWidths[1]);
       
       // adjust the switch widths
-      $switch.find('.ui-switch-middle').width(labelMaxWidth + 54);
+      $switch.find('.ui-switch-middle').width(labelMaxWidth + $switch.find('.ui-switch-width').width());
       $switch.find('a').width(labelMaxWidth);
       
       // cache the "off" and "on" positions

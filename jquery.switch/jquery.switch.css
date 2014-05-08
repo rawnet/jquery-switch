@@ -126,3 +126,7 @@
   -webkit-user-select: none;
   user-select: none;
 }
+
+.ui-switch-width {
+  width: 54px;
+}
