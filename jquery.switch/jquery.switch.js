@@ -99,7 +99,7 @@
           labelMaxWidth = Math.max(linkWidths[0], linkWidths[1]);
       
       // adjust the switch widths
-      $switch.find('.ui-switch-middle').width(labelMaxWidth + 43);
+      $switch.find('.ui-switch-middle').width(labelMaxWidth + 54);
       $switch.find('a').width(labelMaxWidth);
       
       // cache the "off" and "on" positions
