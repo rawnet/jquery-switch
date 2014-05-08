@@ -76,8 +76,8 @@
         on: options.on || opts.first().val(),
         off: options.off || opts.last().val()
       }, text = {
-        on: opts.filter('[value=' + values.on + ']').text(),
-        off: opts.filter('[value=' + values.off + ']').text()
+        on: opts.filter('[value="' + values.on + '"]').text(),
+        off: opts.filter('[value="' + values.off + '"]').text()
       };
       
       // assign the <select>'s val as a class on the switch
