@@ -1,3 +1,5 @@
+:warning: **This project is no longer maintained!** :warning:
+
 # jQuery/Switch
 
 jQuery/Switch is an iOS-inspired slide/toggle widget. It began as an alternative switch for jQuery Mobile, but it also targets desktop browsers as well.
