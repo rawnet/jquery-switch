@@ -1,0 +1,101 @@
+$jqSwitch-bg-on: green !default;
+$jqSwitch-bg-off: red !default;
+$jqSwitch-border-label: black !default;
+$jqSwitch-border-handle: black !default;
+
+@mixin jqSwitch(){
+  .ui-switch {
+    display: inline-block; position: relative;
+    cursor: pointer;
+    &:focus {
+      border-color: #8aade1;
+      -webkit-box-shadow: 0 0 5px #8aade1; /* Safari before v5 and Google Chrome */
+      -moz-box-shadow: 0 0 5px #8aade1; /* Firefox */
+      -o-box-shadow: 0 0 5px #8aade1; /* Opera */
+      box-shadow: 0 0 5px #8aade1; /* CSS3 browsers */
+      outline: none; /* disabling Safari's default behavior*/
+    }
+  }
+
+  .ui-switch.disabled {
+    border-color: #999;
+    cursor: default;
+  }
+
+  $handleSize: 25px;
+  .ui-switch-handle {
+    display: block; height: $handleSize; width: $handleSize; position: absolute; top: -4px; left: -15px;
+    background: #fff; border: 1px solid $jqSwitch-border-handle;
+  }
+
+  .ui-switch-mask {
+    height: $handleSize + 3; margin: 2px 4px; overflow: hidden;
+  }
+
+  $outerHeight: $handleSize + 5;
+  .ui-switch-middle {
+    height: $outerHeight; width: 60px; position: relative; margin-top: -1*$outerHeight; z-index: 100;
+  }
+
+  .ui-switch-master {
+    height: 24px; position: relative; left: 10px;
+  }
+
+  $edgeGap: 5px;
+  $labelheight: $handleSize - $edgeGap;
+  .ui-switch-upper {
+    height: $labelheight; width: auto; margin: $edgeGap; position: absolute; z-index: 101;
+  }
+
+  .ui-switch-lower {
+    height: $labelheight; width: 1000px; margin: $edgeGap; position: absolute; z-index: 99;
+  }
+
+  .ui-switch-.disabled .ui-switch-handle:after {
+    display: block; position: absolute; top: 0; left: 0; height: $handleSize; width: $handleSize;
+    content: ' ';
+    background: white;
+  }
+
+  .ui-switch-labels {
+    clear: both;
+    a {
+      display: block; float: left; padding: 0 10px;
+      border: solid 1px $jqSwitch-border-label;
+      line-height: 18px; font-size: 12px; color: white; text-align: center; font-weight: bold; text-decoration: none; white-space: nowrap;
+    }
+  }
+
+  .ui-switch-on {
+    border-right: none; border-color: #006600; background: $jqSwitch-bg-on;
+    padding-right: 20px;
+  }
+
+  .ui-switch-off {
+    border-left: none; border-color: #660000; background: $jqSwitch-bg-off;
+    padding-left: 20px;
+  }
+
+  .ui-switch.disabled {
+    .ui-switch-on, .ui-switch-off {
+      border-color: #333;
+    }
+  }
+
+  .ui-switch-on, .ui-switch-off {
+    &:hover {
+      color: white; text-decoration: none;
+    }
+  }
+
+  .ui-switch, .ui-switch * {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .ui-switch-width {
+    width: 54px;
+  }
+}
