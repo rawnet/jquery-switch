@@ -33,6 +33,7 @@
         </div>                                              \n\
       </div>                                                \n\
       <div class="ui-switch-middle"></div>                  \n\
+      <div class="ui-switch-width"></div>                  \n\
     </div>';
                   
   // helpers to indicate when the mouse button
@@ -76,8 +77,8 @@
         on: options.on || opts.first().val(),
         off: options.off || opts.last().val()
       }, text = {
-        on: opts.filter('[value=' + values.on + ']').text(),
-        off: opts.filter('[value=' + values.off + ']').text()
+        on: opts.filter('[value="' + values.on + '"]').text(),
+        off: opts.filter('[value="' + values.off + '"]').text()
       };
       
       // assign the <select>'s val as a class on the switch
@@ -99,7 +100,7 @@
           labelMaxWidth = Math.max(linkWidths[0], linkWidths[1]);
       
       // adjust the switch widths
-      $switch.find('.ui-switch-middle').width(labelMaxWidth + 43);
+      $switch.find('.ui-switch-middle').width(labelMaxWidth + $switch.find('.ui-switch-width').width());
       $switch.find('a').width(labelMaxWidth);
       
       // cache the "off" and "on" positions

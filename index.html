@@ -35,7 +35,7 @@
     
     <!-- Le jquery switch-->
     <link href="jquery.switch/jquery.switch.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="jquery.switch/jquery.switch.min.js"></script>
+    <script type="text/javascript" src="jquery.switch/jquery.switch.js"></script>
     
     <script>
       $(function() {
@@ -105,14 +105,6 @@
       </header>
       
       <section>
-        <div class="row">
-          <div class="span16">
-            <iframe style="width: 100%; height: 600px; border: solid 1px black;" src="http://jsfiddle.net/6twenty/3Uw2s/" frameborder="0"></iframe>
-          </div>
-          <div class="span16">
-            <p><a href="http://jsfiddle.net/6twenty/3Uw2s/" target="_blank">Go to this fiddle</a></p>
-          </div>
-        </div><!-- /row -->
         
         <div class="page-header" style="margin-top:50px;">
           <h1>Demos <small>cut to the chase</small></h1>
@@ -141,16 +133,16 @@
           <div class="span4">
             <h3>Custom values/labels</h3>
             <select class="example-2">
-              <option value="a">True</option>
-              <option value="b">False</option>
+              <option value="a">Option one</option>
+              <option value="b">Option two</option>
             </select>
           </div>
           
           <div class="span12">
             <h3>The code <small>custom values/labels</small></h3>
             <pre class="prettyprint linenums">&lt;select&gt;
-  &lt;option value="a"&gt;True&lt;/option&gt;
-  &lt;option value="b"&gt;False&lt;/option&gt;
+  &lt;option value="a"&gt;Option one&lt;/option&gt;
+  &lt;option value="b"&gt;Option two&lt;/option&gt;
 &lt;/select&gt;</pre>
             <pre class="prettyprint linenums">$('select').switchify();</pre>
           </div>
