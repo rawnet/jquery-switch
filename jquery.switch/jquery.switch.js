@@ -137,7 +137,7 @@
             $switch.removeData('switchEvent');
           }
 
-          if (!(type === 'on' || type === 'off')) {
+          if (!(type === 'on' || type === 'on-inst' || type === 'off' || type === 'off-inst')) {
             throw "jQuery/Switch: \"switch:slide\" event must be triggered with an additional parameter of \"on\" or \"off\"";
           }
 
@@ -149,6 +149,7 @@
       var controls = $switch.data('controls', {
         _to: function(type, options) {
           if (!options) { options = { silent: false }; }
+          type += (options.instant ? "-inst" : "");
           if (!disabled && !options.silent) {
             $switch.data('switchEvent', type);
             $switch.trigger('switch:slide', [type]);
@@ -287,6 +288,27 @@
       $switch.bind('switch:slideoff', function() {
         $switch.data('animating', true).removeAttr('data-dragging');
         $master.stop().animate({ left: masterOff }, 'fast', function() {
+          $switch.data('animating', false).data('select').val(values.off);
+          $switch.removeClass('on').addClass('off');
+          mousedown = false; wait = false;
+        });
+      });
+      
+      
+      // slide to the "on" position
+      $switch.bind('switch:slideon-inst', function() {
+        $switch.data('animating', true).removeAttr('data-dragging');
+        $master.stop().animate({ left: masterOn }, 0, function() {
+          $switch.data('animating', false).data('select').val(values.on);
+          $switch.removeClass('off').addClass('on');
+          mousedown = false; wait = false;
+        });
+      });
+      
+      // slide to the "off" position
+      $switch.bind('switch:slideoff-inst', function() {
+        $switch.data('animating', true).removeAttr('data-dragging');
+        $master.stop().animate({ left: masterOff }, 0, function() {
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
           mousedown = false; wait = false;
